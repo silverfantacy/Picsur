@@ -1,4 +1,4 @@
-import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { ImageDBModule } from '../../collections/image-db/image-db.module.js';
 import { RoleDbModule } from '../../collections/role-db/role-db.module.js';
@@ -10,7 +10,7 @@ import { DemoManagerService } from './demo.service.js';
   imports: [ImageDBModule, EarlyConfigModule, RoleDbModule],
   providers: [DemoManagerService],
 })
-export class DemoManagerModule implements OnModuleInit {
+export class DemoManagerModule implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DemoManagerModule.name);
 
   constructor(
@@ -23,6 +23,14 @@ export class DemoManagerModule implements OnModuleInit {
     if (this.hostConfigService.isDemo()) {
       this.logger.warn('Demo mode enabled, images are ephimeral');
       await this.setupDemoMode();
+    }
+  }
+
+  onModuleDestroy() {
+    // Clean up the interval to prevent memory leaks
+    if (this.schedulerRegistry.doesExist('interval', 'demo')) {
+      this.schedulerRegistry.deleteInterval('demo');
+      this.logger.log('Cleaned up demo interval');
     }
   }
 

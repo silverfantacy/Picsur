@@ -32,12 +32,13 @@ export class JwtConfigService implements JwtOptionsFactory {
       await this.prefService.getStringPreference('jwt_expires_in'),
     );
 
-    let milliseconds = ms(expiresIn as any) as unknown as number;
-    if (isNaN(milliseconds)) {
-      milliseconds = 1000 * 60 * 60 * 24; // 1 day
+    const millisecondsResult = ms(expiresIn as any);
+    if (typeof millisecondsResult !== 'number' || isNaN(millisecondsResult)) {
+      // Default to 1 day if parsing fails
+      return 60 * 60 * 24; // 1 day in seconds
     }
 
-    return milliseconds / 1000;
+    return millisecondsResult / 1000;
   }
 
   public async createJwtOptions(): Promise<JwtModuleOptions> {

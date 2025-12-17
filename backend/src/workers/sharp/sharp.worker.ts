@@ -10,6 +10,17 @@ import {
 } from './sharp.message.js';
 import { UniversalSharpIn, UniversalSharpOut } from './universal-sharp.js';
 
+// Simple logger for worker processes (cannot use NestJS Logger in isolated workers)
+const logger = {
+  warn: (message: string) => {
+    process.stderr.write(`[WARN] [SharpWorker] ${message}\n`);
+  },
+  error: (error: Error | string) => {
+    const message = error instanceof Error ? error.stack || error.message : error;
+    process.stderr.write(`[ERROR] [SharpWorker] ${message}\n`);
+  },
+};
+
 export class SharpWorker {
   private startTime = 0;
   private sharpi: Sharp | null = null;
@@ -35,7 +46,7 @@ export class SharpWorker {
         hard: 1000 * 1000 * memoryLimit,
       });
     } catch (e) {
-      console.warn('Failed to set memory limit');
+      logger.warn('Failed to set memory limit');
     }
 
     process.on('message', this.messageHandler.bind(this));
@@ -116,9 +127,11 @@ export class SharpWorker {
 
   private purge(reason: any): void {
     if (typeof reason === 'string') {
-      console.error(new Error(reason));
+      logger.error(new Error(reason));
+    } else if (reason instanceof Error) {
+      logger.error(reason);
     } else {
-      console.error(reason);
+      logger.error(String(reason));
     }
     process.exit(1);
   }

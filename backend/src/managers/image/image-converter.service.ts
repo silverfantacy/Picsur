@@ -68,8 +68,13 @@ export class ImageConverterService {
     if (HasFailed(memLimit) || HasFailed(timeLimit)) {
       return Fail(FT.Internal, 'Failed to get conversion limits');
     }
-    let timeLimitMS = ms(timeLimit as any) as unknown as number;
-    if (isNaN(timeLimitMS) || timeLimitMS === 0) timeLimitMS = 15 * 1000; // 15 seconds
+    const timeLimitResult = ms(timeLimit as any);
+    let timeLimitMS: number;
+    if (typeof timeLimitResult === 'number' && !isNaN(timeLimitResult) && timeLimitResult !== 0) {
+      timeLimitMS = timeLimitResult;
+    } else {
+      timeLimitMS = 15 * 1000; // 15 seconds
+    }
 
     const sharpWrapper = new SharpWrapper(timeLimitMS, memLimit);
     const sharpOptions: SharpOptions = {

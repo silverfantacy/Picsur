@@ -9,6 +9,7 @@ import {
 import { FindResult } from 'picsur-shared/dist/types/find-result';
 import { generateRandomString } from 'picsur-shared/dist/util/random';
 import { Repository } from 'typeorm';
+import { hashSync, compareSync } from 'bcrypt-ts';
 import { EApiKeyBackend } from '../../database/entities/apikey.entity.js';
 import { EUserBackend } from '../../database/entities/users/user.entity.js';
 
@@ -25,21 +26,20 @@ export class ApiKeyDbService {
     const apikey = new EApiKeyBackend<string>();
     apikey.user = userid;
     apikey.created = new Date();
-    // YYYY-MM-DD- followed by a random number
+    // YYYY-MM-DD- followed by a random string for uniqueness
     apikey.name =
       new Date().toISOString().slice(0, 10) +
       '_' +
-      Math.round(Math.random() * 100);
-    apikey.key = generateRandomString(32); // Might collide, probably not
+      generateRandomString(6);
 
-    /*
-    And yes it might be more secure here to sha256 the key, to ensure that they are not leaked upon db breach
-    But this would mean that the user has to keep track of it themselves, and it makes many other things less smooth
-    So just foking protect ya database, and we'll be fine
-    */
+    // Generate plaintext key and hash it for storage
+    const plaintextKey = generateRandomString(32);
+    apikey.key = hashSync(plaintextKey, 10);
 
     try {
-      return this.apikeyRepo.save(apikey);
+      const saved = await this.apikeyRepo.save(apikey);
+      // Return the plaintext key only once to the user
+      return { ...saved, key: plaintextKey } as EApiKeyBackend<string>;
     } catch (e) {
       return Fail(FT.Database, e);
     }
@@ -137,15 +137,23 @@ export class ApiKeyDbService {
 
   async resolve(key: string): AsyncFailable<EApiKeyBackend<EUserBackend>> {
     try {
-      const apikey = await this.apikeyRepo.findOne({
-        where: { key },
+      // Note: Since keys are hashed, we need to fetch all keys and compare
+      // For better performance in production, consider:
+      // 1. Adding an indexed lookup field (e.g., SHA256 of key)
+      // 2. Implementing caching for frequently used keys
+      // 3. Setting reasonable limits on total API keys per user
+      const apikeys = await this.apikeyRepo.find({
         relations: ['user'],
       });
-      if (!apikey) return Fail(FT.NotFound, 'API key not found');
 
-      this.updateLastUsed(apikey);
+      for (const apikey of apikeys) {
+        if (compareSync(key, apikey.key)) {
+          this.updateLastUsed(apikey);
+          return apikey as EApiKeyBackend<EUserBackend>;
+        }
+      }
 
-      return apikey as EApiKeyBackend<EUserBackend>;
+      return Fail(FT.NotFound, 'API key not found');
     } catch (e) {
       return Fail(FT.Database, e);
     }

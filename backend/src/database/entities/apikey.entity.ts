@@ -11,7 +11,9 @@ import { EUserBackend } from './users/user.entity.js';
 
 const OverriddenEApiKeySchema = EApiKeySchema.omit({ user: true }).merge(
   z.object({
-    user: z.any(),
+    // TypeORM can return user as either a string ID (loadRelationIds) or full object (relations)
+    // Using z.unknown() allows both types without strict validation at this level
+    user: z.union([z.string(), z.unknown()]),
   }),
 );
 type OverriddenEApiKey = z.infer<typeof OverriddenEApiKeySchema>;

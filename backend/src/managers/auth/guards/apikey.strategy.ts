@@ -21,17 +21,16 @@ export class ApiKeyStrategy extends PassportStrategy(
         prefix: 'Api-Key ',
       },
       false,
-      (
+      async (
         apikey: string,
         verified: (err: Error | null, user?: object, info?: object) => void,
       ) => {
-        this.validate(apikey)
-          .then((user) => {
-            verified(null, user === false ? undefined : user);
-          })
-          .catch((err) => {
-            verified(err, undefined);
-          });
+        try {
+          const user = await this.validate(apikey);
+          verified(null, user === false ? undefined : user);
+        } catch (err) {
+          verified(err as Error, undefined);
+        }
       },
     );
   }
@@ -39,13 +38,13 @@ export class ApiKeyStrategy extends PassportStrategy(
   async validate(apikey: string): Promise<EUser | false> {
     const apiValidation = await IsApiKey().safeParseAsync(apikey);
     if (!apiValidation.success) {
-      this.logger.warn('Invalid apikey format: ' + apikey);
+      this.logger.warn('Invalid apikey format received');
       return false;
     }
 
     const apikeyResult = await this.apikeyDB.resolve(apikey);
     if (HasFailed(apikeyResult)) {
-      this.logger.warn('Invalid apikey: ' + apikey);
+      this.logger.warn('Failed to resolve apikey');
       return false;
     }
 
@@ -53,7 +52,7 @@ export class ApiKeyStrategy extends PassportStrategy(
 
     const userValidation = await EUserSchema.safeParseAsync(user);
     if (!userValidation.success) {
-      this.logger.error('Invalid user: ' + JSON.stringify(user));
+      this.logger.error('User validation failed');
       return false;
     }
 

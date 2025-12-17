@@ -1,4 +1,4 @@
-import { Logger, Module, OnModuleInit } from '@nestjs/common';
+import { Logger, Module, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { ImageDBModule } from '../../collections/image-db/image-db.module.js';
 import { SystemStateDbModule } from '../../collections/system-state-db/system-state-db.module.js';
@@ -12,7 +12,7 @@ import { UsageService } from './usage.service.js';
   providers: [UsageService],
   exports: [UsageService],
 })
-export class UsageManagerModule implements OnModuleInit {
+export class UsageManagerModule implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(UsageManagerModule.name);
 
   constructor(
@@ -33,6 +33,14 @@ export class UsageManagerModule implements OnModuleInit {
     this.schedulerRegistry.addInterval('usage', interval);
 
     this.cronJob();
+  }
+
+  onModuleDestroy() {
+    // Clean up the interval to prevent memory leaks
+    if (this.schedulerRegistry.doesExist('interval', 'usage')) {
+      this.schedulerRegistry.deleteInterval('usage');
+      this.logger.log('Cleaned up usage interval');
+    }
   }
 
   private cronJob() {
