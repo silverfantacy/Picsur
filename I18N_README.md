@@ -157,10 +157,52 @@ export class HeaderComponent {
 - [Angular i18n Guide](https://angular.io/guide/i18n)
 - [ICU Message Format](http://userguide.icu-project.org/formatparse/messages)
 
-## ⚠️ 已知問題
+## ⚠️ 已知問題與修復
 
-1. **Webpack 配置錯誤** - 目前 `pnpm run build` 會出現 webpack 配置錯誤，這是專案既有問題，與多國語言功能無關
-2. **向後相容性** - 為了避免破壞現有功能，保留了舊的導出名稱，待全面測試後可逐步移除
+### 已修復的問題 ✅
+
+#### 1. Webpack 配置錯誤
+**問題**：`pnpm run build` 出現 `Invalid configuration object` 錯誤
+
+**解決方案**：由於專案使用 `"type": "module"`，webpack 配置檔必須使用 CommonJS 格式：
+```javascript
+// custom-webpack.config.cjs (改為 .cjs 副檔名)
+const webpack = require('webpack');
+module.exports = {
+  plugins: [
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-tw/),
+  ],
+};
+```
+
+#### 2. TranslateHttpLoader 建構子錯誤
+**問題**：`Expected 0 arguments, but got 3` - ngx-translate/http-loader v17 的建構子不再接受參數
+
+**解決方案**：改用 `TRANSLATE_HTTP_LOADER_CONFIG` 注入 token 來配置：
+```typescript
+// app.module.ts
+import { TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(): TranslateHttpLoader {
+  return new TranslateHttpLoader(); // 不再傳入參數
+}
+
+@NgModule({
+  providers: [
+    {
+      provide: TRANSLATE_HTTP_LOADER_CONFIG,
+      useValue: {
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      },
+    },
+  ],
+})
+```
+
+### 其他注意事項
+
+1. **向後相容性** - 為了避免破壞現有功能，i18n 檔案保留了舊的導出名稱，待全面測試後可逐步移除
 
 ## 📄 授權
 

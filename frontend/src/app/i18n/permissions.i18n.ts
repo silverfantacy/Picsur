@@ -1,49 +1,24 @@
 import { Permission } from 'picsur-shared/dist/dto/permissions.enum';
 
-// 注意: 此檔案現在使用 i18n key
-export const PermissionI18nKeys: {
-  [key in Permission]: string;
-} = {
-  [Permission.ImageView]: 'PERMISSIONS.IMAGE_VIEW',
-  [Permission.ImageUpload]: 'PERMISSIONS.IMAGE_UPLOAD',
-  [Permission.ImageManage]: 'PERMISSIONS.IMAGE_MANAGE',
-  [Permission.ImageDeleteKey]: 'PERMISSIONS.IMAGE_DELETE_KEY',
-
-  [Permission.UserLogin]: 'PERMISSIONS.USER_LOGIN',
-  [Permission.UserKeepLogin]: 'PERMISSIONS.USER_KEEP_LOGIN',
-  [Permission.UserRegister]: 'PERMISSIONS.USER_REGISTER',
-
-  [Permission.Settings]: 'PERMISSIONS.SETTINGS',
-
-  [Permission.ApiKey]: 'PERMISSIONS.API_KEY',
-
-  [Permission.ImageAdmin]: 'PERMISSIONS.IMAGE_ADMIN',
-  [Permission.UserAdmin]: 'PERMISSIONS.USER_ADMIN',
-  [Permission.RoleAdmin]: 'PERMISSIONS.ROLE_ADMIN',
-  [Permission.ApiKeyAdmin]: 'PERMISSIONS.API_KEY_ADMIN',
-  [Permission.SysPrefAdmin]: 'PERMISSIONS.SYS_PREF_ADMIN',
-};
-
-// 保留舊的匯出名稱以向後相容
 export const UIFriendlyPermissions: {
   [key in Permission]: string;
 } = {
-  [Permission.ImageView]: 'View Images',
-  [Permission.ImageUpload]: 'Upload Images',
-  [Permission.ImageManage]: 'Manage Own Images',
-  [Permission.ImageDeleteKey]: 'Use Deletekey',
+  [Permission.ImageView]: '檢視圖片',
+  [Permission.ImageUpload]: '上傳圖片',
+  [Permission.ImageManage]: '管理自己的圖片',
+  [Permission.ImageDeleteKey]: '使用刪除金鑰',
 
-  [Permission.UserLogin]: 'Login',
-  [Permission.UserKeepLogin]: 'Stay Logged In',
-  [Permission.UserRegister]: 'Register',
+  [Permission.UserLogin]: '登入',
+  [Permission.UserKeepLogin]: '保持登入',
+  [Permission.UserRegister]: '註冊',
 
-  [Permission.Settings]: 'View settings',
+  [Permission.Settings]: '檢視設定',
 
-  [Permission.ApiKey]: 'Use API keys',
+  [Permission.ApiKey]: '使用 API 金鑰',
 
-  [Permission.ImageAdmin]: 'Image Admin',
-  [Permission.UserAdmin]: 'User Admin',
-  [Permission.RoleAdmin]: 'Role Admin',
-  [Permission.ApiKeyAdmin]: 'API Key Admin',
-  [Permission.SysPrefAdmin]: 'System Admin',
+  [Permission.ImageAdmin]: '圖片管理員',
+  [Permission.UserAdmin]: '使用者管理員',
+  [Permission.RoleAdmin]: '角色管理員',
+  [Permission.ApiKeyAdmin]: 'API 金鑰管理員',
+  [Permission.SysPrefAdmin]: '系統管理員',
 };

@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
   ) {
     usageService;
 
-    // 設定可用的語言
+    // 設定可用的語言（繁體中文和英文）
     this.translate.addLangs(['zh-TW', 'en']);
 
     // 從 localStorage 讀取使用者偏好的語言，若無則使用預設的繁體中文

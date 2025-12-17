@@ -1,28 +1,14 @@
 import { UsrPreference } from 'picsur-shared/dist/dto/usr-preferences.enum';
 
-// 注意: 此檔案現在使用 i18n key
-export const UsrPreferenceI18nKeys: {
-  [key in UsrPreference]: {
-    nameKey: string;
-    helpKey: string;
-  };
-} = {
-  [UsrPreference.KeepOriginal]: {
-    nameKey: 'USER_PREFERENCES.KEEP_ORIGINAL.NAME',
-    helpKey: 'USER_PREFERENCES.KEEP_ORIGINAL.HELP',
-  },
-};
-
-// 保留舊的匯出名稱以向後相容
 export const UsrPreferenceFriendlyNames: {
   [key in UsrPreference]: string;
 } = {
-  [UsrPreference.KeepOriginal]: 'Keep original file',
+  [UsrPreference.KeepOriginal]: '保留原始檔案',
 };
 
 export const UsrPreferenceHelpText: {
   [key in UsrPreference]: string;
 } = {
   [UsrPreference.KeepOriginal]:
-    'Store the original files you upload to the service, this way no data will be lost. This will also store exif data.',
+    '儲存您上傳到服務的原始檔案，這樣就不會遺失任何資料。這也會儲存 EXIF 資料。',
 };
