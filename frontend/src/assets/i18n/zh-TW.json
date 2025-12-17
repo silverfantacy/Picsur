@@ -51,6 +51,19 @@
     "PROFILE": "個人資料",
     "ADMIN": "管理"
   },
+  "HEADER": {
+    "UPLOAD_IMAGE": "上傳圖片",
+    "LOGIN": "登入",
+    "LOGIN_OR_REGISTER": "登入或註冊",
+    "LOGIN_TO_ACCOUNT": "登入帳戶",
+    "YOUR_ACCOUNT": "您的帳戶",
+    "MY_IMAGES": "我的圖片",
+    "SETTINGS": "設定",
+    "LOGOUT": "登出",
+    "LOGOUT_SUCCESS": "登出成功",
+    "LANGUAGE": "語言",
+    "SWITCH_LANGUAGE": "切換語言"
+  },
   "UPLOAD": {
     "TITLE": "上傳圖片",
     "DROP_HERE": "將圖片拖曳到這裡",
@@ -60,6 +73,31 @@
     "FAILED": "上傳失敗",
     "MAX_SIZE": "最大檔案大小",
     "ALLOWED_TYPES": "允許的檔案類型"
+  },
+  "LOGIN": {
+    "TITLE": "登入您的帳戶",
+    "USERNAME": "使用者名稱",
+    "PASSWORD": "密碼",
+    "LOGIN_BUTTON": "登入",
+    "REGISTER_BUTTON": "註冊",
+    "LOADING": "載入中...",
+    "SUCCESS": "登入成功",
+    "FAILED": "登入失敗",
+    "USERNAME_REQUIRED": "請輸入使用者名稱",
+    "PASSWORD_REQUIRED": "請輸入密碼"
+  },
+  "REGISTER": {
+    "TITLE": "註冊新帳戶",
+    "USERNAME": "使用者名稱",
+    "PASSWORD": "密碼",
+    "CONFIRM_PASSWORD": "確認密碼",
+    "REGISTER_BUTTON": "註冊",
+    "LOGIN_BUTTON": "返回登入",
+    "SUCCESS": "註冊成功",
+    "FAILED": "註冊失敗",
+    "USERNAME_REQUIRED": "請輸入使用者名稱",
+    "PASSWORD_REQUIRED": "請輸入密碼",
+    "PASSWORD_MISMATCH": "密碼不一致"
   },
   "SETTINGS": {
     "GENERAL": "一般設定",

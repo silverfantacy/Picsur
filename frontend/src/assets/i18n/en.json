@@ -51,6 +51,19 @@
     "PROFILE": "Profile",
     "ADMIN": "Admin"
   },
+  "HEADER": {
+    "UPLOAD_IMAGE": "Upload an image",
+    "LOGIN": "LOGIN",
+    "LOGIN_OR_REGISTER": "Login or Register",
+    "LOGIN_TO_ACCOUNT": "Login to your account",
+    "YOUR_ACCOUNT": "Your account",
+    "MY_IMAGES": "My Images",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout",
+    "LOGOUT_SUCCESS": "Logout successful",
+    "LANGUAGE": "Language",
+    "SWITCH_LANGUAGE": "Switch language"
+  },
   "UPLOAD": {
     "TITLE": "Upload Image",
     "DROP_HERE": "Drop images here",
@@ -60,6 +73,31 @@
     "FAILED": "Upload failed",
     "MAX_SIZE": "Maximum file size",
     "ALLOWED_TYPES": "Allowed file types"
+  },
+  "LOGIN": {
+    "TITLE": "Login to your account",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "LOGIN_BUTTON": "LOGIN",
+    "REGISTER_BUTTON": "REGISTER",
+    "LOADING": "LOADING...",
+    "SUCCESS": "Login successful",
+    "FAILED": "Login failed",
+    "USERNAME_REQUIRED": "Username is required",
+    "PASSWORD_REQUIRED": "Password is required"
+  },
+  "REGISTER": {
+    "TITLE": "Register new account",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "REGISTER_BUTTON": "REGISTER",
+    "LOGIN_BUTTON": "Back to Login",
+    "SUCCESS": "Registration successful",
+    "FAILED": "Registration failed",
+    "USERNAME_REQUIRED": "Username is required",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_MISMATCH": "Passwords do not match"
   },
   "SETTINGS": {
     "GENERAL": "General",

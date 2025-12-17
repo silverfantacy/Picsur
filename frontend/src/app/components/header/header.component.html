@@ -31,7 +31,7 @@
   <span class="spacer"></span>
 
   <button
-    matTooltip="Upload an image"
+    [matTooltip]="'HEADER.UPLOAD_IMAGE' | translate"
     *ngIf="canUpload"
     mat-icon-button
     class="me-3"
@@ -41,19 +41,28 @@
   </button>
 
   <button
-    [matTooltip]="canRegister ? 'Login or Register' : 'Login to your account'"
+    matTooltip="{{ 'HEADER.SWITCH_LANGUAGE' | translate }}"
+    mat-icon-button
+    class="me-3"
+    [matMenuTriggerFor]="languageMenu"
+  >
+    <mat-icon>language</mat-icon>
+  </button>
+
+  <button
+    [matTooltip]="(canRegister ? 'HEADER.LOGIN_OR_REGISTER' : 'HEADER.LOGIN_TO_ACCOUNT') | translate"
     *ngIf="!isLoggedIn && canLogIn"
     mat-stroked-button
     (click)="doLogin()"
   >
-    LOGIN
+    {{ 'HEADER.LOGIN' | translate }}
   </button>
 
   <!-- <span *ngIf="isLoggedIn" class="me-3 d-none d-sm-block">
     {{ user?.username }}
   </span> -->
   <button
-    matTooltip="Your account"
+    [matTooltip]="'HEADER.YOUR_ACCOUNT' | translate"
     *ngIf="isLoggedIn"
     mat-icon-button
     [matMenuTriggerFor]="menu"
@@ -70,16 +79,29 @@
       </span>
       <button *ngIf="canUpload" mat-menu-item (click)="doImages()">
         <mat-icon fontSet="material-icons-outlined">image</mat-icon>
-        <span>My Images</span>
+        <span>{{ 'HEADER.MY_IMAGES' | translate }}</span>
       </button>
       <button *ngIf="canAccessSettings" mat-menu-item (click)="doSettings()">
         <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
-        <span>Settings</span>
+        <span>{{ 'HEADER.SETTINGS' | translate }}</span>
       </button>
       <button mat-menu-item (click)="doLogout()">
         <mat-icon fontSet="material-icons-outlined">logout</mat-icon>
-        <span>Logout</span>
+        <span>{{ 'HEADER.LOGOUT' | translate }}</span>
       </button>
     </ng-template>
+  </mat-menu>
+
+  <mat-menu #languageMenu="matMenu" xPosition="before">
+    <button
+      mat-menu-item
+      *ngFor="let lang of availableLanguages"
+      (click)="switchLanguage(lang.code)"
+      [class.active]="currentLanguage === lang.code"
+    >
+      <mat-icon *ngIf="currentLanguage === lang.code">check</mat-icon>
+      <mat-icon *ngIf="currentLanguage !== lang.code" style="visibility: hidden;">check</mat-icon>
+      <span>{{ lang.name }}</span>
+    </button>
   </mat-menu>
 </mat-toolbar>

@@ -9,12 +9,12 @@
       </div>
 
       <div class="col-12 py-2">
-        <h1>Register your new account</h1>
+        <h1>{{ 'REGISTER.TITLE' | translate }}</h1>
       </div>
 
       <div class="col-12 py-2">
         <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
+          <mat-label>{{ 'REGISTER.USERNAME' | translate }}</mat-label>
           <input
             matInput
             type="text"
@@ -32,7 +32,7 @@
 
       <div class="col-12 py-2">
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
+          <mat-label>{{ 'REGISTER.PASSWORD' | translate }}</mat-label>
           <input
             matInput
             type="password"
@@ -48,7 +48,7 @@
 
       <div class="col-12 py-2">
         <mat-form-field appearance="outline">
-          <mat-label>Confirm Password</mat-label>
+          <mat-label>{{ 'REGISTER.CONFIRM_PASSWORD' | translate }}</mat-label>
           <input
             matInput
             type="password"
@@ -71,7 +71,7 @@
           (click)="onLogin()"
           type="button"
         >
-          LOGIN
+          {{ 'REGISTER.LOGIN_BUTTON' | translate }}
         </button>
         <button
           mat-flat-button
@@ -80,7 +80,7 @@
           type="submit"
           [disabled]="loading"
         >
-          {{ loading ? 'LOADING...' : 'REGISTER' }}
+          {{ (loading ? 'LOGIN.LOADING' : 'REGISTER.REGISTER_BUTTON') | translate }}
         </button>
       </div>
     </form>

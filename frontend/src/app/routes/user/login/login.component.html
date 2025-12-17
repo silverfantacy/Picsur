@@ -9,12 +9,12 @@
       </div>
 
       <div class="col-12 py-2">
-        <h1>Login to your account</h1>
+        <h1>{{ 'LOGIN.TITLE' | translate }}</h1>
       </div>
 
       <div class="col-12 py-2">
         <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
+          <mat-label>{{ 'LOGIN.USERNAME' | translate }}</mat-label>
           <input
             matInput
             type="text"
@@ -32,7 +32,7 @@
 
       <div class="col-12 py-2">
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
+          <mat-label>{{ 'LOGIN.PASSWORD' | translate }}</mat-label>
           <input
             matInput
             type="password"
@@ -54,7 +54,7 @@
           type="submit"
           [disabled]="loading"
         >
-          {{ loading ? 'LOADING...' : 'LOGIN' }}
+          {{ (loading ? 'LOGIN.LOADING' : 'LOGIN.LOGIN_BUTTON') | translate }}
         </button>
         <button
           *ngIf="showRegister"
@@ -64,7 +64,7 @@
           (click)="onRegister()"
           type="button"
         >
-          REGISTER
+          {{ 'LOGIN.REGISTER_BUTTON' | translate }}
         </button>
       </div>
     </form>

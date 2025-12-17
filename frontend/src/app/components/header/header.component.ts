@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
+import { TranslateService } from '@ngx-translate/core';
 import { Permission } from 'picsur-shared/dist/dto/permissions.enum';
 import { EUser } from 'picsur-shared/dist/entities/user.entity';
 import { HasFailed } from 'picsur-shared/dist/types/failable';
@@ -16,6 +17,7 @@ import { UserService } from '../../services/api/user.service';
 import { PermissionService } from '../../services/api/permission.service';
 import { Logger } from '../../services/logger/logger.service';
 import { ErrorService } from '../../util/error-manager/error.service';
+import { LanguageService } from '../../services/language/language.service';
 
 @Component({
   selector: 'app-header',
@@ -32,6 +34,8 @@ export class HeaderComponent implements OnInit {
     private readonly permissionService: PermissionService,
     private readonly changeDetector: ChangeDetectorRef,
     private readonly errorService: ErrorService,
+    private readonly translate: TranslateService,
+    private readonly languageService: LanguageService,
   ) {}
 
   @Input('enableHamburger') public set enableHamburger(value: boolean) {
@@ -56,6 +60,14 @@ export class HeaderComponent implements OnInit {
 
   public get isLoggedIn() {
     return this.currentUser !== null;
+  }
+
+  public get currentLanguage() {
+    return this.translate.currentLang || this.translate.defaultLang;
+  }
+
+  public get availableLanguages() {
+    return this.languageService.availableLanguages;
   }
 
   ngOnInit(): void {
@@ -97,7 +109,14 @@ export class HeaderComponent implements OnInit {
     if (HasFailed(user))
       return this.errorService.showFailure(user, this.logger);
 
-    this.errorService.success('Logout successful');
+    this.translate.get('HEADER.LOGOUT_SUCCESS').subscribe((text: string) => {
+      this.errorService.success(text);
+    });
+  }
+
+  switchLanguage(lang: string) {
+    this.languageService.switchLanguage(lang);
+    this.changeDetector.markForCheck();
   }
 
   doSettings() {
