@@ -69,6 +69,31 @@ Every featured marked here should work in the latest release.
 - [ ] Public gallery
 - [ ] Albums
 
+## 🚀 Deployment
+
+### Quick Deploy to Zeabur
+
+Picsur can be deployed to Zeabur in less than 5 minutes:
+
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com)
+
+📖 **[Quick Start Guide](./QUICK_START_ZEABUR.md)** - Step-by-step deployment instructions
+
+📚 **Additional Resources:**
+- [Complete Zeabur Deployment Guide](./ZEABUR_DEPLOYMENT.md)
+- [502 Error Troubleshooting](./diagnose-502.md)
+- [Environment Variables Reference](./.env.example)
+
+### Key Features of this Deployment:
+- ✅ **Multi-language Support**: Traditional Chinese (繁體中文) and English
+- ✅ **Production Ready**: Optimized build configuration
+- ✅ **Easy Setup**: Pre-configured environment variables
+- ✅ **Database Included**: PostgreSQL automatically configured
+
+### Other Deployment Options
+
+For Docker, Docker Compose, and other deployment methods, please refer to the [original documentation](https://github.com/CaramelFur/Picsur).
+
 ## Bugs
 
 If you encounter any bugs or oddities, please open an issue [here](https://github.com/CaramelFur/Picsur/issues). Cause without feedback I'll never know they exists.
