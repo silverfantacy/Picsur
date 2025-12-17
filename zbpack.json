@@ -1,0 +1,5 @@
+{
+  "build_command": "chmod +x zeabur-build.sh && ./zeabur-build.sh",
+  "start_command": "chmod +x zeabur-start.sh && ./zeabur-start.sh",
+  "node_version": "20"
+}
