@@ -52,20 +52,22 @@ PICSUR_TELEMETRY=true
 
 ### 3. 建置設定
 
-確認 `package.json` 中的 scripts：
+專案已配置 `zbpack.json` 文件，Zeabur 會自動使用：
 
 ```json
 {
-  "scripts": {
-    "build": "./support/build.sh",
-    "start": "cd backend && pnpm start:prod"
-  }
+  "build_command": "pnpm install --frozen-lockfile && pnpm --filter picsur-shared build && pnpm --filter picsur-frontend build && pnpm --filter picsur-backend build",
+  "start_command": "cd backend && node dist/main.js",
+  "node_version": "20"
 }
 ```
 
-如果 Zeabur 無法正確識別建置命令，可能需要手動指定：
-- **Build Command**: `pnpm build`
-- **Start Command**: `cd backend && node dist/main`
+建置流程：
+1. 安裝所有依賴（使用 pnpm workspace）
+2. 依序建置：shared → frontend → backend
+3. 啟動後端服務
+
+**無需手動配置建置命令**，Zeabur 會自動讀取 `zbpack.json`
 
 ### 4. 檢查 Node.js 版本
 
@@ -115,14 +117,16 @@ echo $PICSUR_PORT
 
 ### 步驟 4：手動測試建置
 
-在本地測試建置：
+在本地測試建置（複製 Zeabur 的建置流程）：
 
 ```bash
 # 安裝依賴
-pnpm install
+pnpm install --frozen-lockfile
 
-# 建置專案
-pnpm build
+# 建置專案（與 Zeabur 相同的順序）
+pnpm --filter picsur-shared build
+pnpm --filter picsur-frontend build
+pnpm --filter picsur-backend build
 
 # 設定環境變數
 export PICSUR_PRODUCTION=true
@@ -133,9 +137,9 @@ export PICSUR_DB_PASSWORD=picsur
 export PICSUR_DB_DATABASE=picsur
 export PICSUR_PORT=8080
 
-# 啟動後端
+# 啟動後端（與 Zeabur 相同的命令）
 cd backend
-node dist/main
+node dist/main.js
 ```
 
 ---

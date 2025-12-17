@@ -40,38 +40,63 @@ Location: http://0.0.0.0:8080
 
 #### ❌ 錯誤訊息對照表：
 
+**運行時錯誤：**
+
 | 錯誤訊息 | 原因 | 解決方案 |
 |---------|------|---------|
 | `Error: connect ECONNREFUSED` | 無法連接到資料庫 | 檢查資料庫是否啟動、環境變數是否正確 |
 | `FATAL: database "picsur" does not exist` | 資料庫不存在 | Zeabur 應自動建立，等待或重啟資料庫服務 |
 | `password authentication failed` | 資料庫密碼錯誤 | 檢查 PICSUR_DB_PASSWORD 是否正確映射 |
 | `listen EADDRINUSE` | Port 被占用 | 檢查 PICSUR_PORT 設定，應該是 ${PORT} |
-| `Cannot find module` | 建置失敗 | 查看建置日誌，可能需要重新部署 |
+| `Cannot find module` | 建置失敗或模組遺失 | 查看建置日誌，確認所有套件都已建置 |
 | `UnhandledPromiseRejectionWarning` | 通常是資料庫或配置問題 | 查看完整錯誤堆疊 |
+
+**建置錯誤：**
+
+| 錯誤訊息 | 原因 | 解決方案 |
+|---------|------|---------|
+| `cannot access 'xxx.sh': No such file or directory` | 腳本文件在容器中不存在 | 已修復：使用 zbpack.json 內聯命令 |
+| `pnpm: command not found` | pnpm 未安裝 | zbpack.json 已指定 node_version，應自動安裝 |
+| `Build timed out` | 建置時間過長 | 可能是依賴安裝問題，重試部署 |
+| `ERROR: failed to solve` | Docker 建置失敗 | 檢查 Zeabur 建置日誌的詳細錯誤 |
 
 ---
 
 ## 🔧 常見 502 場景與解決方案
 
-### 場景 1：剛創建服務就出現 502
+### 場景 1：建置失敗 - 找不到腳本文件
+**錯誤訊息**：`chmod: cannot access 'zeabur-build.sh': No such file or directory`
+**原因**：Zeabur 使用 Docker 建置，外部腳本未被複製到容器中
+**解決**：✅ 已修復！最新版本的 `zbpack.json` 使用內聯命令，不再依賴外部腳本
+
+**確認修復**：檢查 `zbpack.json` 內容應為：
+```json
+{
+  "build_command": "pnpm install --frozen-lockfile && pnpm --filter picsur-shared build && pnpm --filter picsur-frontend build && pnpm --filter picsur-backend build",
+  "start_command": "cd backend && node dist/main.js",
+  "node_version": "20"
+}
+```
+
+### 場景 2：剛創建服務就出現 502
 **原因**：資料庫還在初始化中
 **解決**：等待 1-2 分鐘，PostgreSQL 需要時間完全啟動
 
-### 場景 2：建置成功但啟動失敗
+### 場景 3：建置成功但啟動失敗
 **原因**：環境變數未正確設定
 **解決**：
 1. 檢查所有 `PICSUR_*` 環境變數
 2. 確認變數使用 `${...}` 語法引用 PostgreSQL 變數
 3. 儲存後重新部署
 
-### 場景 3：之前能用現在不能用
+### 場景 4：之前能用現在不能用
 **原因**：可能是資料庫連接問題或記憶體不足
 **解決**：
 1. 重啟 PostgreSQL 服務
 2. 重啟應用程式服務
 3. 檢查 Zeabur 服務資源使用量
 
-### 場景 4：本地可以運行，Zeabur 不行
+### 場景 5：本地可以運行，Zeabur 不行
 **原因**：環境變數差異或建置配置問題
 **解決**：
 1. 確認 `PICSUR_PRODUCTION=true` 已設定
@@ -126,19 +151,17 @@ netstat -tlnp | grep $PICSUR_PORT
 3. 重新設定應用程式的環境變數
 4. 重新部署
 
-### 步驟 3：本地測試
+### 步驟 3：本地測試（複製 Zeabur 建置流程）
 ```bash
 # Clone repository
 git clone [your-repo]
 cd picsur
 
-# 安裝依賴
-pnpm install
-
 # 啟動本地資料庫
 docker-compose -f support/dev.docker-compose.yml up -d
 
-# 建置
+# 完全按照 Zeabur 的建置命令
+pnpm install --frozen-lockfile
 pnpm --filter picsur-shared build
 pnpm --filter picsur-frontend build
 pnpm --filter picsur-backend build
@@ -152,10 +175,12 @@ export PICSUR_DB_PASSWORD=picsur
 export PICSUR_DB_DATABASE=picsur
 export PICSUR_PORT=8080
 
-# 啟動
+# 啟動（與 Zeabur 相同的命令）
 cd backend
-node dist/main
+node dist/main.js
 ```
+
+如果本地測試成功但 Zeabur 失敗，問題通常是環境變數配置。
 
 ---
 

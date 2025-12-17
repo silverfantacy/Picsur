@@ -1,5 +1,5 @@
 {
-  "build_command": "chmod +x zeabur-build.sh && ./zeabur-build.sh",
-  "start_command": "chmod +x zeabur-start.sh && ./zeabur-start.sh",
+  "build_command": "pnpm install --frozen-lockfile && pnpm --filter picsur-shared build && pnpm --filter picsur-frontend build && pnpm --filter picsur-backend build",
+  "start_command": "cd backend && node dist/main.js",
   "node_version": "20"
 }
