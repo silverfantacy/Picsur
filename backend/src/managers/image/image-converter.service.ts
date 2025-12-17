@@ -26,7 +26,7 @@ export type ConvertOptions = ImageRequestParams & InternalConvertOptions;
 
 @Injectable()
 export class ImageConverterService {
-  constructor(private readonly sysPref: SysPreferenceDbService) {}
+  constructor(private readonly sysPref: SysPreferenceDbService) { }
 
   public async convert(
     image: Buffer,
@@ -68,7 +68,7 @@ export class ImageConverterService {
     if (HasFailed(memLimit) || HasFailed(timeLimit)) {
       return Fail(FT.Internal, 'Failed to get conversion limits');
     }
-    let timeLimitMS = ms(timeLimit as string);
+    let timeLimitMS = ms(timeLimit as any) as unknown as number;
     if (isNaN(timeLimitMS) || timeLimitMS === 0) timeLimitMS = 15 * 1000; // 15 seconds
 
     const sharpWrapper = new SharpWrapper(timeLimitMS, memLimit);

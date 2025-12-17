@@ -6,7 +6,7 @@ const ApiResponseBase = z.object({
   timeMs: z.number().min(0).int(),
 });
 
-const ApiSuccessResponse = <T extends z.AnyZodObject>(data: T) =>
+const ApiSuccessResponse = <T extends z.ZodObject<any>>(data: T) =>
   ApiResponseBase.merge(
     z.object({
       success: z.literal(true),
@@ -24,7 +24,7 @@ const ApiErrorResponse = ApiResponseBase.merge(
   }),
 );
 
-export const ApiResponseSchema = <T extends z.AnyZodObject>(data: T) =>
+export const ApiResponseSchema = <T extends z.ZodObject<any>>(data: T) =>
   ApiErrorResponse.or(ApiSuccessResponse(data));
 
 export type ApiErrorResponse = z.infer<typeof ApiErrorResponse>;

@@ -9,7 +9,7 @@ import { EUserBackend2EUser } from '../../../models/transformers/user.transforme
 
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(
-  HeaderAPIKeyStrategy,
+  HeaderAPIKeyStrategy as any,
   'apikey',
 ) {
   private readonly logger = new Logger(ApiKeyStrategy.name);

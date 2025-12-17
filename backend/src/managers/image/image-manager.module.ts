@@ -28,7 +28,7 @@ export class ImageManagerModule implements OnModuleInit {
     private readonly prefManager: SysPreferenceDbService,
     private readonly imageFileDB: ImageFileDBService,
     private readonly imageDB: ImageDBService,
-  ) {}
+  ) { }
 
   async onModuleInit() {
     await this.imageManagerCron();
@@ -49,7 +49,7 @@ export class ImageManagerModule implements OnModuleInit {
       return;
     }
 
-    let after_ms = ms(remove_derivatives_after as string);
+    let after_ms = ms(remove_derivatives_after as any) as unknown as number;
     if (isNaN(after_ms) || after_ms === 0) {
       this.logger.log('remove_derivatives_after is 0, skipping cron');
       return;

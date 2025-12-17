@@ -60,7 +60,7 @@
     "uuid": "^11.0.2",
     "webpack": "^5.95.0",
     "webpack-bundle-analyzer": "^4.10.2",
-    "zod": "^3.23.8",
+    "zod": "^4.2.1",
     "zone.js": "~0.14.10"
   }
 }

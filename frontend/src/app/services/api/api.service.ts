@@ -57,7 +57,7 @@ function CreateFailedRunningRequest<R>(failure: Failure) {
     downloadProgress: subject.asObservable(),
     result: Promise.resolve(failure),
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    cancel: () => {},
+    cancel: () => { },
   } as RunningRequest<R>;
 }
 
@@ -76,9 +76,9 @@ export class ApiService {
   constructor(
     private readonly keyService: KeyStorageService,
     @Inject(WINDOW) private readonly windowRef: Window,
-  ) {}
+  ) { }
 
-  public get<T extends z.AnyZodObject>(
+  public get<T extends z.ZodObject<any>>(
     type: ZodDtoStatic<T>,
     url: string,
   ): RunningRequest<z.infer<T>> {
@@ -93,7 +93,7 @@ export class ApiService {
     return this.fetchBuffer(url, { method: 'GET' });
   }
 
-  public post<T extends z.AnyZodObject, W extends z.AnyZodObject>(
+  public post<T extends z.ZodObject<any>, W extends z.ZodObject<any>>(
     sendType: ZodDtoStatic<T>,
     receiveType: ZodDtoStatic<W>,
     url: string,
@@ -114,14 +114,14 @@ export class ApiService {
     });
   }
 
-  public postEmpty<T extends z.AnyZodObject>(
+  public postEmpty<T extends z.ZodObject<any>>(
     type: ZodDtoStatic<T>,
     url: string,
   ): RunningRequest<z.infer<T>> {
     return this.fetchSafeJson(type, url, { method: 'POST' });
   }
 
-  public postForm<T extends z.AnyZodObject>(
+  public postForm<T extends z.ZodObject<any>>(
     receiveType: ZodDtoStatic<T>,
     url: string,
     data: MultiPartRequest,
@@ -132,12 +132,12 @@ export class ApiService {
     });
   }
 
-  private fetchSafeJson<T extends z.AnyZodObject>(
+  private fetchSafeJson<T extends z.ZodObject<any>>(
     type: ZodDtoStatic<T>,
     url: string,
     options: AxiosRequestConfig,
   ): RunningRequest<z.infer<T>> {
-    const resultSchema = ApiResponseSchema(type.zodSchema as z.AnyZodObject);
+    const resultSchema = ApiResponseSchema(type.zodSchema as z.ZodObject<any>);
     type resultType = z.infer<typeof resultSchema>;
 
     const result = this.fetchJsonAs<resultType>(url, options);
@@ -156,7 +156,7 @@ export class ApiService {
         return Fail(FT.Unknown, r.data.message);
 
       return validateResult.data.data;
-    });
+    }) as RunningRequest<z.infer<T>>;
   }
 
   private fetchJsonAs<T>(

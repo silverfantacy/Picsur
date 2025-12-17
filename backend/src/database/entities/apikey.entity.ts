@@ -1,17 +1,17 @@
 import { EApiKeySchema } from 'picsur-shared/dist/entities/apikey.entity';
 import {
-    Column,
-    Entity,
-    Index,
-    ManyToOne,
-    PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { z } from 'zod';
 import { EUserBackend } from './users/user.entity.js';
 
 const OverriddenEApiKeySchema = EApiKeySchema.omit({ user: true }).merge(
   z.object({
-    user: z.string().or(z.object({})),
+    user: z.any(),
   }),
 );
 type OverriddenEApiKey = z.infer<typeof OverriddenEApiKeySchema>;
@@ -19,8 +19,7 @@ type OverriddenEApiKey = z.infer<typeof OverriddenEApiKeySchema>;
 @Entity()
 export class EApiKeyBackend<
   T extends string | EUserBackend = string | EUserBackend,
-> implements OverriddenEApiKey
-{
+> implements OverriddenEApiKey {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
