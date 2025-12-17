@@ -1,84 +1,78 @@
 import { SysPreference } from 'picsur-shared/dist/dto/sys-preferences.enum';
 
-export const SysPreferenceUI: {
+// 注意: 此檔案現在使用 i18n key，實際文字在 assets/i18n/*.json
+export const SysPreferenceI18nKeys: {
   [key in SysPreference]: {
-    name: string;
-    helpText: string;
-    category: string;
+    nameKey: string;
+    helpKey: string;
+    categoryKey: string;
   };
 } = {
   [SysPreference.HostOverride]: {
-    name: 'Host Override',
-    helpText:
-      'Override the hostname for the server, useful for when you are accessing the server from a different domain.',
-    category: 'General',
+    nameKey: 'SYSTEM_PREFERENCES.HOST_OVERRIDE.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.HOST_OVERRIDE.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.HOST_OVERRIDE.CATEGORY',
   },
 
   [SysPreference.RemoveDerivativesAfter]: {
-    name: 'Cached Images Expiry Time',
-    helpText:
-      'Time before cached converted images are deleted. This does not affect the original image. A lower cache time will save on disk space but cost more cpu. Set to 0 to disable.',
-    category: 'Image Processing',
+    nameKey: 'SYSTEM_PREFERENCES.REMOVE_DERIVATIVES_AFTER.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.REMOVE_DERIVATIVES_AFTER.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.REMOVE_DERIVATIVES_AFTER.CATEGORY',
   },
   [SysPreference.AllowEditing]: {
-    name: 'Allow images to be edited',
-    helpText:
-      'Allow images to be edited (e.g. resize, flip). Using these features will use more CPU power.',
-
-    category: 'Image Processing',
+    nameKey: 'SYSTEM_PREFERENCES.ALLOW_EDITING.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.ALLOW_EDITING.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.ALLOW_EDITING.CATEGORY',
   },
   [SysPreference.ConversionTimeLimit]: {
-    name: 'Convert/Edit Time Limit',
-    helpText:
-      'Time limit for converting/editing images. You may need to increase this on low powered devices.',
-    category: 'Image Processing',
+    nameKey: 'SYSTEM_PREFERENCES.CONVERSION_TIME_LIMIT.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.CONVERSION_TIME_LIMIT.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.CONVERSION_TIME_LIMIT.CATEGORY',
   },
   [SysPreference.ConversionMemoryLimit]: {
-    name: 'Convert/Edit Memory Limit MB',
-    helpText:
-      'Memory limit for converting/editing images. You only need to increase this if you are storing massive images.',
-    category: 'Image Processing',
+    nameKey: 'SYSTEM_PREFERENCES.CONVERSION_MEMORY_LIMIT.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.CONVERSION_MEMORY_LIMIT.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.CONVERSION_MEMORY_LIMIT.CATEGORY',
   },
 
   [SysPreference.JwtSecret]: {
-    name: 'JWT Secret',
-    helpText: 'Secret used to sign JWT authentication tokens.',
-    category: 'Authentication',
+    nameKey: 'SYSTEM_PREFERENCES.JWT_SECRET.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.JWT_SECRET.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.JWT_SECRET.CATEGORY',
   },
   [SysPreference.JwtExpiresIn]: {
-    name: 'JWT Expiry Time',
-    helpText: 'Time before JWT authentication tokens expire.',
-    category: 'Authentication',
+    nameKey: 'SYSTEM_PREFERENCES.JWT_EXPIRES_IN.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.JWT_EXPIRES_IN.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.JWT_EXPIRES_IN.CATEGORY',
   },
   [SysPreference.BCryptStrength]: {
-    name: 'BCrypt Strength',
-    helpText:
-      'Strength of BCrypt hashing algorithm, 10 is recommended. Reduce this if running on a low powered device.',
-    category: 'Authentication',
+    nameKey: 'SYSTEM_PREFERENCES.BCRYPT_STRENGTH.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.BCRYPT_STRENGTH.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.BCRYPT_STRENGTH.CATEGORY',
   },
 
   [SysPreference.EnableTracking]: {
-    name: 'Enable Ackee Web Tracking',
-    helpText:
-      'Enable tracking of the website usage using Ackee. You will need to set the tracking URL and ID.',
-    category: 'Usage',
+    nameKey: 'SYSTEM_PREFERENCES.ENABLE_TRACKING.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.ENABLE_TRACKING.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.ENABLE_TRACKING.CATEGORY',
   },
   [SysPreference.TrackingUrl]: {
-    name: 'Ackee tracking URL',
-    helpText:
-      'URL of the Ackee tracking server. Requests are proxied, so ensure the X-Forwarded-For header is handled.',
-    category: 'Usage',
+    nameKey: 'SYSTEM_PREFERENCES.TRACKING_URL.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.TRACKING_URL.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.TRACKING_URL.CATEGORY',
   },
   [SysPreference.TrackingId]: {
-    name: 'Ackee trackign website ID',
-    helpText: 'ID of the website to track.',
-    category: 'Usage',
+    nameKey: 'SYSTEM_PREFERENCES.TRACKING_ID.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.TRACKING_ID.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.TRACKING_ID.CATEGORY',
   },
 
   [SysPreference.EnableTelemetry]: {
-    name: 'Enable System Telemetry',
-    helpText:
-      'Enable system telemetry, this will send anonymous usage data to the developers.',
-    category: 'Usage',
+    nameKey: 'SYSTEM_PREFERENCES.ENABLE_TELEMETRY.NAME',
+    helpKey: 'SYSTEM_PREFERENCES.ENABLE_TELEMETRY.HELP',
+    categoryKey: 'SYSTEM_PREFERENCES.ENABLE_TELEMETRY.CATEGORY',
   },
 };
+
+// 保留舊的匯出名稱以向後相容（暫時）
+export const SysPreferenceUI = SysPreferenceI18nKeys;

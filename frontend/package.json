@@ -62,5 +62,9 @@
     "webpack-bundle-analyzer": "^4.10.2",
     "zod": "^4.2.1",
     "zone.js": "~0.14.10"
+  },
+  "dependencies": {
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0"
   }
 }

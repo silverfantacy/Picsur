@@ -1,0 +1,171 @@
+{
+  "APP": {
+    "TITLE": "Picsur",
+    "DESCRIPTION": "簡易開源圖片分享平台"
+  },
+  "COMMON": {
+    "SAVE": "儲存",
+    "CANCEL": "取消",
+    "DELETE": "刪除",
+    "EDIT": "編輯",
+    "ADD": "新增",
+    "CLOSE": "關閉",
+    "BACK": "返回",
+    "CONFIRM": "確認",
+    "YES": "是",
+    "NO": "否",
+    "LOADING": "載入中...",
+    "ERROR": "錯誤",
+    "SUCCESS": "成功",
+    "WARNING": "警告",
+    "INFO": "資訊",
+    "SEARCH": "搜尋",
+    "UPLOAD": "上傳",
+    "DOWNLOAD": "下載",
+    "COPY": "複製",
+    "SHARE": "分享",
+    "REFRESH": "重新整理",
+    "SETTINGS": "設定",
+    "LOGOUT": "登出",
+    "LOGIN": "登入",
+    "REGISTER": "註冊",
+    "USERNAME": "使用者名稱",
+    "PASSWORD": "密碼",
+    "EMAIL": "電子郵件",
+    "NAME": "名稱",
+    "DESCRIPTION": "描述",
+    "CREATED": "建立時間",
+    "UPDATED": "更新時間",
+    "ACTIONS": "操作",
+    "STATUS": "狀態",
+    "ACTIVE": "啟用",
+    "INACTIVE": "停用"
+  },
+  "NAV": {
+    "HOME": "首頁",
+    "UPLOAD": "上傳",
+    "IMAGES": "圖片",
+    "USERS": "使用者",
+    "ROLES": "角色",
+    "SETTINGS": "設定",
+    "PROFILE": "個人資料",
+    "ADMIN": "管理"
+  },
+  "UPLOAD": {
+    "TITLE": "上傳圖片",
+    "DROP_HERE": "將圖片拖曳到這裡",
+    "OR_CLICK": "或點擊選擇檔案",
+    "UPLOADING": "上傳中...",
+    "SUCCESS": "上傳成功",
+    "FAILED": "上傳失敗",
+    "MAX_SIZE": "最大檔案大小",
+    "ALLOWED_TYPES": "允許的檔案類型"
+  },
+  "SETTINGS": {
+    "GENERAL": "一般設定",
+    "USERS": "使用者管理",
+    "ROLES": "角色管理",
+    "SYSTEM": "系統設定",
+    "PREFERENCES": "偏好設定"
+  },
+  "SYSTEM_PREFERENCES": {
+    "HOST_OVERRIDE": {
+      "NAME": "主機覆蓋",
+      "HELP": "覆蓋伺服器的主機名稱，當您從不同網域存取伺服器時很有用。",
+      "CATEGORY": "一般"
+    },
+    "REMOVE_DERIVATIVES_AFTER": {
+      "NAME": "快取圖片過期時間",
+      "HELP": "快取轉換圖片被刪除前的時間。這不會影響原始圖片。較短的快取時間可節省磁碟空間但會消耗更多 CPU。設為 0 則停用。",
+      "CATEGORY": "圖片處理"
+    },
+    "ALLOW_EDITING": {
+      "NAME": "允許編輯圖片",
+      "HELP": "允許編輯圖片（例如調整大小、翻轉）。使用這些功能會消耗更多 CPU 資源。",
+      "CATEGORY": "圖片處理"
+    },
+    "CONVERSION_TIME_LIMIT": {
+      "NAME": "轉換/編輯時間限制",
+      "HELP": "轉換/編輯圖片的時間限制。在低效能裝置上可能需要增加此值。",
+      "CATEGORY": "圖片處理"
+    },
+    "CONVERSION_MEMORY_LIMIT": {
+      "NAME": "轉換/編輯記憶體限制 (MB)",
+      "HELP": "轉換/編輯圖片的記憶體限制。只有在儲存超大圖片時才需要增加此值。",
+      "CATEGORY": "圖片處理"
+    },
+    "JWT_SECRET": {
+      "NAME": "JWT 密鑰",
+      "HELP": "用於簽署 JWT 驗證令牌的密鑰。",
+      "CATEGORY": "身份驗證"
+    },
+    "JWT_EXPIRES_IN": {
+      "NAME": "JWT 過期時間",
+      "HELP": "JWT 驗證令牌過期前的時間。",
+      "CATEGORY": "身份驗證"
+    },
+    "BCRYPT_STRENGTH": {
+      "NAME": "BCrypt 強度",
+      "HELP": "BCrypt 雜湊演算法的強度，建議設為 10。如果在低效能裝置上運行請降低此值。",
+      "CATEGORY": "身份驗證"
+    },
+    "ENABLE_TRACKING": {
+      "NAME": "啟用 Ackee 網站追蹤",
+      "HELP": "使用 Ackee 啟用網站使用追蹤。您需要設定追蹤 URL 和 ID。",
+      "CATEGORY": "使用情況"
+    },
+    "TRACKING_URL": {
+      "NAME": "Ackee 追蹤 URL",
+      "HELP": "Ackee 追蹤伺服器的 URL。請求會被代理，因此請確保處理 X-Forwarded-For 標頭。",
+      "CATEGORY": "使用情況"
+    },
+    "TRACKING_ID": {
+      "NAME": "Ackee 追蹤網站 ID",
+      "HELP": "要追蹤的網站 ID。",
+      "CATEGORY": "使用情況"
+    },
+    "ENABLE_TELEMETRY": {
+      "NAME": "啟用系統遙測",
+      "HELP": "啟用系統遙測，這將向開發者發送匿名使用資料。",
+      "CATEGORY": "使用情況"
+    }
+  },
+  "USER_PREFERENCES": {
+    "KEEP_ORIGINAL": {
+      "NAME": "保留原始檔案",
+      "HELP": "儲存您上傳到服務的原始檔案，這樣就不會遺失任何資料。這也會儲存 EXIF 資料。"
+    }
+  },
+  "PERMISSIONS": {
+    "IMAGE_UPLOAD": "上傳圖片",
+    "IMAGE_VIEW": "檢視圖片",
+    "IMAGE_DELETE": "刪除圖片",
+    "IMAGE_EDIT": "編輯圖片",
+    "USER_MANAGE": "管理使用者",
+    "USER_LIST": "列出使用者",
+    "ROLE_MANAGE": "管理角色",
+    "ROLE_LIST": "列出角色",
+    "SETTINGS_VIEW": "檢視設定",
+    "SETTINGS_EDIT": "編輯設定"
+  },
+  "ROLES": {
+    "TITLE": "角色管理",
+    "ADD_ROLE": "新增角色",
+    "EDIT_ROLE": "編輯角色",
+    "DELETE_ROLE": "刪除角色",
+    "PERMISSIONS": "權限",
+    "ROLE_NAME": "角色名稱"
+  },
+  "USERS": {
+    "TITLE": "使用者管理",
+    "ADD_USER": "新增使用者",
+    "EDIT_USER": "編輯使用者",
+    "DELETE_USER": "刪除使用者",
+    "USER_ROLES": "使用者角色"
+  },
+  "LANGUAGE": {
+    "SELECT": "選擇語言",
+    "ZH_TW": "繁體中文",
+    "EN": "English"
+  }
+}

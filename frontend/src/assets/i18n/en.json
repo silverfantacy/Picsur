@@ -1,0 +1,175 @@
+{
+  "APP": {
+    "TITLE": "Picsur",
+    "DESCRIPTION": "Easy open source image sharing platform"
+  },
+  "COMMON": {
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "ADD": "Add",
+    "CLOSE": "Close",
+    "BACK": "Back",
+    "CONFIRM": "Confirm",
+    "YES": "Yes",
+    "NO": "No",
+    "LOADING": "Loading...",
+    "ERROR": "Error",
+    "SUCCESS": "Success",
+    "WARNING": "Warning",
+    "INFO": "Info",
+    "SEARCH": "Search",
+    "UPLOAD": "Upload",
+    "DOWNLOAD": "Download",
+    "COPY": "Copy",
+    "SHARE": "Share",
+    "REFRESH": "Refresh",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "EMAIL": "Email",
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "CREATED": "Created",
+    "UPDATED": "Updated",
+    "ACTIONS": "Actions",
+    "STATUS": "Status",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive"
+  },
+  "NAV": {
+    "HOME": "Home",
+    "UPLOAD": "Upload",
+    "IMAGES": "Images",
+    "USERS": "Users",
+    "ROLES": "Roles",
+    "SETTINGS": "Settings",
+    "PROFILE": "Profile",
+    "ADMIN": "Admin"
+  },
+  "UPLOAD": {
+    "TITLE": "Upload Image",
+    "DROP_HERE": "Drop images here",
+    "OR_CLICK": "or click to select files",
+    "UPLOADING": "Uploading...",
+    "SUCCESS": "Upload successful",
+    "FAILED": "Upload failed",
+    "MAX_SIZE": "Maximum file size",
+    "ALLOWED_TYPES": "Allowed file types"
+  },
+  "SETTINGS": {
+    "GENERAL": "General",
+    "USERS": "Users",
+    "ROLES": "Roles",
+    "SYSTEM": "System",
+    "PREFERENCES": "Preferences"
+  },
+  "SYSTEM_PREFERENCES": {
+    "HOST_OVERRIDE": {
+      "NAME": "Host Override",
+      "HELP": "Override the hostname for the server, useful for when you are accessing the server from a different domain.",
+      "CATEGORY": "General"
+    },
+    "REMOVE_DERIVATIVES_AFTER": {
+      "NAME": "Cached Images Expiry Time",
+      "HELP": "Time before cached converted images are deleted. This does not affect the original image. A lower cache time will save on disk space but cost more cpu. Set to 0 to disable.",
+      "CATEGORY": "Image Processing"
+    },
+    "ALLOW_EDITING": {
+      "NAME": "Allow images to be edited",
+      "HELP": "Allow images to be edited (e.g. resize, flip). Using these features will use more CPU power.",
+      "CATEGORY": "Image Processing"
+    },
+    "CONVERSION_TIME_LIMIT": {
+      "NAME": "Convert/Edit Time Limit",
+      "HELP": "Time limit for converting/editing images. You may need to increase this on low powered devices.",
+      "CATEGORY": "Image Processing"
+    },
+    "CONVERSION_MEMORY_LIMIT": {
+      "NAME": "Convert/Edit Memory Limit MB",
+      "HELP": "Memory limit for converting/editing images. You only need to increase this if you are storing massive images.",
+      "CATEGORY": "Image Processing"
+    },
+    "JWT_SECRET": {
+      "NAME": "JWT Secret",
+      "HELP": "Secret used to sign JWT authentication tokens.",
+      "CATEGORY": "Authentication"
+    },
+    "JWT_EXPIRES_IN": {
+      "NAME": "JWT Expiry Time",
+      "HELP": "Time before JWT authentication tokens expire.",
+      "CATEGORY": "Authentication"
+    },
+    "BCRYPT_STRENGTH": {
+      "NAME": "BCrypt Strength",
+      "HELP": "Strength of BCrypt hashing algorithm, 10 is recommended. Reduce this if running on a low powered device.",
+      "CATEGORY": "Authentication"
+    },
+    "ENABLE_TRACKING": {
+      "NAME": "Enable Ackee Web Tracking",
+      "HELP": "Enable tracking of the website usage using Ackee. You will need to set the tracking URL and ID.",
+      "CATEGORY": "Usage"
+    },
+    "TRACKING_URL": {
+      "NAME": "Ackee tracking URL",
+      "HELP": "URL of the Ackee tracking server. Requests are proxied, so ensure the X-Forwarded-For header is handled.",
+      "CATEGORY": "Usage"
+    },
+    "TRACKING_ID": {
+      "NAME": "Ackee tracking website ID",
+      "HELP": "ID of the website to track.",
+      "CATEGORY": "Usage"
+    },
+    "ENABLE_TELEMETRY": {
+      "NAME": "Enable System Telemetry",
+      "HELP": "Enable system telemetry, this will send anonymous usage data to the developers.",
+      "CATEGORY": "Usage"
+    }
+  },
+  "USER_PREFERENCES": {
+    "KEEP_ORIGINAL": {
+      "NAME": "Keep original file",
+      "HELP": "Store the original files you upload to the service, this way no data will be lost. This will also store exif data."
+    }
+  },
+  "PERMISSIONS": {
+    "IMAGE_VIEW": "View Images",
+    "IMAGE_UPLOAD": "Upload Images",
+    "IMAGE_MANAGE": "Manage Own Images",
+    "IMAGE_DELETE_KEY": "Use Deletekey",
+    "USER_LOGIN": "Login",
+    "USER_KEEP_LOGIN": "Stay Logged In",
+    "USER_REGISTER": "Register",
+    "SETTINGS": "View settings",
+    "API_KEY": "Use API keys",
+    "IMAGE_ADMIN": "Image Admin",
+    "USER_ADMIN": "User Admin",
+    "ROLE_ADMIN": "Role Admin",
+    "API_KEY_ADMIN": "API Key Admin",
+    "SYS_PREF_ADMIN": "System Admin"
+  },
+  "ROLES": {
+    "TITLE": "Role Management",
+    "ADD_ROLE": "Add Role",
+    "EDIT_ROLE": "Edit Role",
+    "DELETE_ROLE": "Delete Role",
+    "PERMISSIONS": "Permissions",
+    "ROLE_NAME": "Role Name"
+  },
+  "USERS": {
+    "TITLE": "User Management",
+    "ADD_USER": "Add User",
+    "EDIT_USER": "Edit User",
+    "DELETE_USER": "Delete User",
+    "USER_ROLES": "User Roles"
+  },
+  "LANGUAGE": {
+    "SELECT": "Select Language",
+    "ZH_TW": "繁體中文",
+    "EN": "English"
+  }
+}

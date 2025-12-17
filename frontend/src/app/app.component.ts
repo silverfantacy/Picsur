@@ -8,6 +8,7 @@ import {
   NavigationStart,
   Router,
 } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { AutoUnsubscribe } from 'ngx-auto-unsubscribe-decorator';
 import { RouteTransitionAnimations } from './app.animation';
 import { PRouteData } from './models/dto/picsur-routes.dto';
@@ -38,9 +39,25 @@ export class AppComponent implements OnInit {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly bootstrapService: BootstrapService,
+    private readonly translate: TranslateService,
     usageService: UsageService,
   ) {
     usageService;
+
+    // 設定可用的語言
+    this.translate.addLangs(['zh-TW', 'en']);
+
+    // 從 localStorage 讀取使用者偏好的語言，若無則使用預設的繁體中文
+    const savedLang = localStorage.getItem('userLang');
+    const defaultLang = savedLang || 'zh-TW';
+
+    this.translate.setDefaultLang('zh-TW');
+    this.translate.use(defaultLang);
+
+    // 儲存選擇的語言
+    if (!savedLang) {
+      localStorage.setItem('userLang', defaultLang);
+    }
   }
 
   public getRouteAnimData() {
