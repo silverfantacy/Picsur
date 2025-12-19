@@ -4,6 +4,7 @@
 
 ## 🏗️ Project Structure & Stack
 
+- **Version**: 0.5.7
 - **Monorepo**: Managed by `pnpm` (v9+).
 - **Frontend**: Angular 18 (SPA), SCSS, RxJS, Zod v4.
 - **Backend**: NestJS 11 (Fastify), TypeORM (PostgreSQL), Passport (JWT/API Key).
@@ -12,36 +13,37 @@
 ## 🛠️ Tooling & Commands
 
 - **Install Dependencies**: `pnpm install`
-- **Build All**: `pnpm build` (Root script)
+- **Build All**: `pnpm build`
+- **Docker Build**: `docker build -t picsur .` (Uses multi-stage optimization)
 - **Shared Library**:
-  - Build: `pnpm --filter picsur-shared build` (Must run before other apps if shared code changes)
-- **Frontend**:
-  - Dev: `ng serve`
-  - Build: `pnpm --filter picsur-frontend build`
-- **Backend**:
-  - Dev: `pnpm --filter picsur-backend start:dev`
-  - Build: `pnpm --filter picsur-backend build`
+  - Build: `pnpm --filter picsur-shared build` (Must run before other apps)
 
 ## 📐 Code Style & Patterns
 
 ### Explicit Type Validation
 - **Zod-First**: Use `zod` schemas for all data validation.
-- **Generics**: When using generics with Zod objects, use `z.ZodObject<any>` instead of `z.AnyZodObject` (Zod v4 requirement).
-- **DTOs**: Define all DTOs in `shared/src/dto` to ensure contract safety between frontend and backend.
+- **Generics**: Use `z.ZodObject<any>` (Zod v4).
+- **DTOs**: Define in `shared/src/dto` for frontend/backend contract safety.
 
 ### Authentication
-- **Backend Strategies**:
-  - JWT (Bearer)
-  - API Key (`Api-Key` header)
-- **Frontend Client**: `api.service.ts` handles auth headers automatically.
+- **Strategies**: JWT (Bearer) and API Key (`Api-Key` header).
+- **Client**: `api.service.ts` handles headers automatically.
 
-### Angular (Frontend)
-- **Service-Based**: Logic should reside in services, not components.
-- **Strict Typing**: Avoid `any` where possible; use shared DTOs.
-- **RxJS**: Use observables for async streams; manage subscriptions using `async` pipe or explicit unsubscribe logic.
+## 🚀 Infrastructure & Deployment
+
+### Docker Optimization
+- **Base Image**: Switched to `node:20-bookworm-slim` for better `libvips` performance (glibc vs musl).
+- **Performance Tuning**: `UV_THREADPOOL_SIZE=4` is recommended for balancing image processing performance and stability on lower-tier servers.
+- **Environment**: 
+  - `PICSUR_HOST=0.0.0.0`
+  - `PICSUR_PORT=8080` (Standard for Zeabur/Container environments)
+
+### SPA Routing (Zeabur / Static Hosting)
+- **Requirement**: Ensure all non-file requests are routed to `index.html`.
+- **Config**: Use `renderPath: '/*'` or equivalent fallback for static file serving.
 
 ## ⚠️ Critical Context
 
-- **Node.js Compatibility**: Frontend requires Node v20.19+ for Angular 21, so it is currently downgraded to **Angular 18** to support Node v20.17 environments.
+- **Node.js Compatibility**: Currently target **Node v20** and **Angular 18** to maintain compatibility across common deployment environments.
 - **Monorepo Build Order**: `shared` -> `backend` / `frontend`.
-- **Zod Version**: Project is unified on **Zod v4**. Be careful with deprecated v3 types.
+- **Image Processing**: Rely on `libvips-dev` and `sharp`. Ensure system dependencies are installed in the Docker runtime.
