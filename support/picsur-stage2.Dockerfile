@@ -1,7 +1,7 @@
 # This dockerfile than builds the production dependencies and the final image
 
 # Always fetch amd64 image
-FROM ghcr.io/caramelfur/picsur-alpha-stage1:latest AS builder_stage1
+FROM picsur-stage1 AS builder_stage1
 
 # === START VIPS ===
 FROM node:20-alpine AS vips_builder
@@ -33,7 +33,10 @@ RUN apk add python3 build-base
 
 WORKDIR /picsur
 COPY --from=builder_stage1 /picsur ./
-ENV SHARP_FORCE_GLOBAL_LIBVIPS=1
+# 使用 sharp 內建的 libvips 以確保 Alpine 環境下的穩定性
+# ENV SHARP_FORCE_GLOBAL_LIBVIPS=1
+# ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+# ENV LD_LIBRARY_PATH=/usr/local/lib
 RUN pnpm install --frozen-lockfile --prod
 
 FROM vips_clean
