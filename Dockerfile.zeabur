@@ -65,5 +65,5 @@ WORKDIR /picsur
 COPY --from=builder_stage2 /picsur ./
 
 EXPOSE 8080
-# 自動將 Zeabur 的 PORT 變數映射到 PICSUR_PORT
-CMD ["sh", "-c", "export PICSUR_PORT=${PORT:-8080} && pnpm --filter picsur-backend start:prod"]
+# 自動將 Zeabur 的 PORT 變數映射到 PICSUR_PORT，並確保監聽 0.0.0.0
+CMD ["sh", "-c", "export PICSUR_PORT=${PORT:-8080} && export PICSUR_HOST=0.0.0.0 && pnpm --filter picsur-backend start:prod"]
