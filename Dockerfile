@@ -1,5 +1,5 @@
 # === STAGE 1: Build Javascript assets ===
-FROM node:20 AS builder_stage1
+FROM node:20-bookworm AS builder_stage1
 
 RUN npm install -g pnpm
 SHELL ["/bin/bash", "-c"]
@@ -18,53 +18,29 @@ RUN mkdir -p /trimmed
 RUN cp -r --parents ./{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,branding} /trimmed
 RUN cp -r --parents ./{frontend,backend,shared}/{dist,package.json} /trimmed
 
-# === STAGE 2: Build libvips from source ===
-FROM node:20-alpine AS vips_builder
-RUN apk add build-base meson cmake pkgconfig glib-dev \
-    expat-dev libexif-dev jpeg-dev libjxl-dev openjpeg-dev libpng-dev \
-    tiff-dev libheif-dev libwebp-dev cgif-dev imagemagick-dev \
-    librsvg-dev pango-dev cfitsio-dev poppler-dev libspng-dev \
-    lcms2-dev fftw-dev libimagequant-dev
-WORKDIR /vips
-RUN wget https://github.com/libvips/libvips/releases/download/v8.16.0/vips-8.16.0.tar.xz -O vips.tar.xz
-RUN tar -xf vips.tar.xz && \
-    cd vips-* && \
-    meson setup build -Dexamples=false && \
-    cd build && \
-    meson compile && \
-    meson install
+# === STAGE 2: Final runtime image ===
+FROM node:20-bookworm-slim
 
-# Clean runtime for vips
-FROM node:20-alpine AS vips_clean
-COPY --from=vips_builder /usr/local /usr/local
-RUN apk add pkgconfig glib expat libexif jpeg libjxl openjpeg libpng tiff \
-    libheif libwebp cgif imagemagick librsvg pango cfitsio poppler poppler-glib \
-    libspng lcms2 fftw libimagequant
-
-# === STAGE 3: Build production dependencies ===
-FROM vips_builder AS builder_stage2
-
-RUN npm install -g pnpm node-gyp
-RUN apk add python3 build-base
-
-WORKDIR /picsur
-COPY --from=builder_stage1 /trimmed ./
-
-# Use pre-built sharp for stability in Alpine, or force global if needed
-# We comment out the force global to ensure deployment stability on Zeabur
-# ENV SHARP_FORCE_GLOBAL_LIBVIPS=1
-RUN pnpm install --frozen-lockfile --prod
-
-# === STAGE 4: Final runtime image ===
-FROM vips_clean
+# Install libvips and production dependencies
+# Debian's libvips is well-optimized with glibc
+RUN apt-get update && apt-get install -y \
+    libvips-dev \
+    python3 \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g pnpm
-ENV PICSUR_PRODUCTION=true
 
+ENV PICSUR_PRODUCTION=true
 WORKDIR /picsur
-COPY --from=builder_stage2 /picsur ./
+
+COPY --from=builder_stage1 /trimmed ./
+
+# Install production dependencies
+RUN pnpm install --frozen-lockfile --prod
 
 EXPOSE 8080
+
 # 優化影像處理併發與 API 回應速度
 # UV_THREADPOOL_SIZE 設為 4 是在低配伺服器下平衡效能與穩定性的推薦值
 CMD ["sh", "-c", "export PICSUR_PORT=${PORT:-8080} && export PICSUR_HOST=0.0.0.0 && export UV_THREADPOOL_SIZE=4 && pnpm --filter picsur-backend start:prod"]
