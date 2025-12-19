@@ -21,7 +21,7 @@ import { BuildShareX } from './sharex-builder';
 export class SettingsShareXComponent implements OnInit {
   private readonly logger = new Logger(SettingsShareXComponent.name);
 
-  public selectedFormat: string = ImageFileType.PNG;
+  public selectedFormat: string = ImageFileType.WEBP;
   public formatOptions: {
     value: string;
     key: string;
@@ -45,7 +45,7 @@ export class SettingsShareXComponent implements OnInit {
     private readonly infoService: InfoService,
     private readonly utilService: UtilService,
     private readonly errorService: ErrorService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formatOptions = this.utilService.getBaseFormatOptions();

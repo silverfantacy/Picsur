@@ -42,7 +42,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private readonly errorService: ErrorService,
     private readonly utilService: UtilService,
     private readonly changeDetector: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   private id = '';
   public metadata: ImageMetaResponse | null = null;
@@ -58,7 +58,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     key: string;
   }[] = [];
 
-  public selectedFormat: string = ImageFileType.JPEG;
+  public selectedFormat: string = ImageFileType.WEBP;
 
   public get image(): EImage | null {
     return this.metadata?.image ?? null;
@@ -140,7 +140,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
       switch (masterFiletype.category) {
         case SupportedFileTypeCategory.Image:
-          this.selectedFormat = ImageFileType.JPEG;
+          this.selectedFormat = ImageFileType.WEBP;
           break;
         case SupportedFileTypeCategory.Animation:
           this.selectedFormat = AnimFileType.GIF;
