@@ -10,8 +10,8 @@ export const HelmetOptions: FastifyHelmetOptions = {
       'frame-ancestors': ["'self'"],
       'img-src': ["'self'", 'data:', 'blob:'],
       'object-src': ["'none'"],
-      'script-src': ["'self'"],
-      'style-src': ["'self'"],
+      'script-src': ["'self'", "'unsafe-inline'"],
+      'style-src': ["'self'", "'unsafe-inline'"],
     },
     useDefaults: false,
     reportOnly: false,
@@ -37,6 +37,6 @@ export const HelmetOptions: FastifyHelmetOptions = {
   hidePoweredBy: true,
   // Enable CSP nonces for scripts and styles to prevent XSS attacks
   // Nonces are automatically injected into script and style tags
-  enableCSPNonces: true,
+  enableCSPNonces: false,
   xssFilter: true,
 };
