@@ -33,7 +33,6 @@ export class ServeStaticConfigService
       {
         rootPath: this.getStaticDirectory(),
         exclude: ['/api/(.*)', '/i/(.*)'],
-        renderPath: '/*',
       },
     ];
   }

@@ -25,10 +25,10 @@ export enum AnimFileType {
 
 export const SupportedImageFileTypes: string[] = Object.values(ImageFileType);
 export const SupportedAnimFileTypes: string[] = Object.values(AnimFileType);
-export const SupportedFileTypes: string[] = Object.values({
-  ...ImageFileType,
-  ...AnimFileType,
-});
+export const SupportedFileTypes: string[] = [
+  ...Object.values(ImageFileType),
+  ...Object.values(AnimFileType),
+];
 
 export enum SupportedFileTypeCategory {
   Image = 'image',
