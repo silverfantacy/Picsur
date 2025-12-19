@@ -36,4 +36,10 @@ export class ServeStaticConfigService
       },
     ];
   }
+
+  // Picsur uses a modified or specific version of ServeStaticModuleOptionsFactory
+  // where the method name is incorrectly defined as createLoggerOptions.
+  public createLoggerOptions(): ServeStaticModuleOptions[] {
+    return this.createStaticModuleOptions();
+  }
 }
