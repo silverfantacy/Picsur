@@ -1,7 +1,18 @@
+```json
 {
   "build": {
     "docker": {
       "dockerfile": "Dockerfile.zeabur"
     }
+  },
+  "deploy": {
+    "ports": [
+      {
+        "id": "http",
+        "port": 8080,
+        "type": "HTTP"
+      }
+    ]
   }
 }
+```
