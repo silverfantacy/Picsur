@@ -175,16 +175,20 @@
     }
   },
   "PERMISSIONS": {
+    "IMAGE_VIEW": "查看圖片",
     "IMAGE_UPLOAD": "上傳圖片",
-    "IMAGE_VIEW": "檢視圖片",
-    "IMAGE_DELETE": "刪除圖片",
-    "IMAGE_EDIT": "編輯圖片",
-    "USER_MANAGE": "管理使用者",
-    "USER_LIST": "列出使用者",
-    "ROLE_MANAGE": "管理角色",
-    "ROLE_LIST": "列出角色",
-    "SETTINGS_VIEW": "檢視設定",
-    "SETTINGS_EDIT": "編輯設定"
+    "IMAGE_MANAGE": "管理個人圖片",
+    "IMAGE_DELETE_KEY": "使用刪除密鑰",
+    "USER_LOGIN": "登入",
+    "USER_KEEP_LOGIN": "保持登入狀態",
+    "USER_REGISTER": "註冊",
+    "SETTINGS": "查看設定",
+    "API_KEY": "使用 API 密鑰",
+    "IMAGE_ADMIN": "圖片管理員",
+    "USER_ADMIN": "使用者管理員",
+    "ROLE_ADMIN": "角色管理員",
+    "API_KEY_ADMIN": "API 密鑰管理員",
+    "SYS_PREF_ADMIN": "系統管理員"
   },
   "ROLES": {
     "TITLE": "角色管理",
