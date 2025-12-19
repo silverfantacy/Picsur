@@ -65,5 +65,6 @@ WORKDIR /picsur
 COPY --from=builder_stage2 /picsur ./
 
 EXPOSE 8080
-# 自動將 Zeabur 的 PORT 變數映射到 PICSUR_PORT，並確保監聽 0.0.0.0
-CMD ["sh", "-c", "export PICSUR_PORT=${PORT:-8080} && export PICSUR_HOST=0.0.0.0 && pnpm --filter picsur-backend start:prod"]
+# 優化影像處理併發與 API 回應速度
+# UV_THREADPOOL_SIZE 設為 4 是在低配伺服器下平衡效能與穩定性的推薦值
+CMD ["sh", "-c", "export PICSUR_PORT=${PORT:-8080} && export PICSUR_HOST=0.0.0.0 && export UV_THREADPOOL_SIZE=4 && pnpm --filter picsur-backend start:prod"]
