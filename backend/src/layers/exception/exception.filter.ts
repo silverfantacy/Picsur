@@ -7,8 +7,10 @@ import {
   MethodNotAllowedException,
   NotFoundException,
   UnauthorizedException,
+  Injectable,
 } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { ServeStaticConfigService } from '../../config/early/serve-static.config.service.js';
 import { ApiErrorResponse } from 'picsur-shared/dist/dto/api/api.dto';
 import {
   Fail,
@@ -21,9 +23,12 @@ import {
 // (As long as its within nest, the earlier fastify stages are not handled here)
 // It neatly wraps the error for easier handling on the client
 
+@Injectable()
 @Catch()
 export class MainExceptionFilter implements ExceptionFilter {
   private static readonly logger = new Logger('MainExceptionFilter');
+
+  constructor(private readonly staticConfig: ServeStaticConfigService) { }
 
   catch(exception: Failure, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -33,6 +38,13 @@ export class MainExceptionFilter implements ExceptionFilter {
     const traceString = `(${request.ip} -> ${request.method} ${request.url})`;
 
     if (!IsFailure(exception)) {
+      if ((exception as any) instanceof NotFoundException) {
+        const url = request.url;
+        if (!url.startsWith('/api') && !url.startsWith('/i/')) {
+          const staticDir = this.staticConfig.getStaticDirectory();
+          return (response as any).sendFile('index.html', staticDir);
+        }
+      }
       exception = this.transformKnownExceptions(exception);
     }
 
