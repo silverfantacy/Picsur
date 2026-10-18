@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 # === STAGE 1: Build Javascript assets ===
 FROM node:20-bookworm AS builder_stage1
 
