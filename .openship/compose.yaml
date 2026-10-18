@@ -1,0 +1,25 @@
+{
+  "services": {
+    "postgres": {
+      "image": "postgres:17-alpine",
+      "restart": "unless-stopped"
+    },
+    "picsur": {
+      "image": "ghcr.io/caramelfur/picsur:latest",
+      "ports": [
+        "8080"
+      ],
+      "restart": "unless-stopped"
+    },
+    "picsur-rering": {
+      "build": {
+        "context": "..",
+        "dockerfile": ".openship/Dockerfile"
+      },
+      "ports": [
+        "8080"
+      ],
+      "restart": "unless-stopped"
+    }
+  }
+}
