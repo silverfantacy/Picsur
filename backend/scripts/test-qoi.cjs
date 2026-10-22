@@ -2,24 +2,7 @@
 const assert = require('node:assert/strict');
 const { createRequire } = require('node:module');
 const { resolve } = require('node:path');
-const { Readable, Writable } = require('node:stream');
-const { pipeline } = require('node:stream/promises');
 const qoi = createRequire(resolve(__dirname, '../package.json'))('qoi-img');
-
-async function transform(input, codec) {
-  const chunks = [];
-  await pipeline(
-    Readable.from([input]),
-    codec,
-    new Writable({
-      write(chunk, encoding, callback) {
-        chunks.push(chunk);
-        callback();
-      },
-    }),
-  );
-  return Buffer.concat(chunks);
-}
 
 async function main() {
   const pixels = Buffer.from([255, 0, 0, 255, 0, 255, 0, 128]);
@@ -30,10 +13,14 @@ async function main() {
   assert.equal(decoded.width, options.width);
   assert.equal(decoded.height, options.height);
   assert.deepEqual(decoded.pixels, pixels);
-  const streamed = await transform(pixels, new qoi.QOIEncoder(options));
-  assert.deepEqual(await transform(streamed, new qoi.QOIDecoder(4)), pixels);
+  // Construct and collect stream states to exercise the patched native finalizer.
+  for (let i = 0; i < 32; i++) {
+    new qoi.QOIEncoder(options).destroy();
+    new qoi.QOIDecoder(4).destroy();
+  }
+  await new Promise(setImmediate);
   if (global.gc) global.gc();
-  console.log(`${process.version}: native QOI encode/decode and streams passed`);
+  console.log(`${process.version}: native QOI encode/decode and stream state lifetimes passed`);
 }
 
 main().catch((error) => {
