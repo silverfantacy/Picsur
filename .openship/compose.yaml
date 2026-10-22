@@ -5,11 +5,14 @@
       "restart": "unless-stopped"
     },
     "picsur": {
-      "image": "ghcr.io/caramelfur/picsur:latest",
       "ports": [
         "8080"
       ],
-      "restart": "unless-stopped"
+      "restart": "unless-stopped",
+      "build": {
+        "context": "..",
+        "dockerfile": ".openship/picsur-official.Dockerfile"
+      }
     },
     "picsur-rering": {
       "build": {
