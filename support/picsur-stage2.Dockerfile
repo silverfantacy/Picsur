@@ -4,7 +4,7 @@
 FROM picsur-stage1 AS builder_stage1
 
 # === START VIPS ===
-FROM node:20-alpine AS vips_builder
+FROM node:22.23.4-alpine AS vips_builder
 RUN apk add build-base meson cmake pkgconfig glib-dev \
     expat-dev libexif-dev jpeg-dev libjxl-dev openjpeg-dev libpng-dev \
     tiff-dev libheif-dev libwebp-dev cgif-dev imagemagick-dev \
@@ -19,7 +19,7 @@ RUN tar -xf vips.tar.xz && \
     meson compile && \
     meson install
 
-FROM node:20-alpine AS vips_clean
+FROM node:22.23.4-alpine AS vips_clean
 COPY --from=vips_builder /usr/local /usr/local
 RUN apk add pkgconfig glib expat libexif jpeg libjxl openjpeg libpng tiff \
     libheif libwebp cgif imagemagick librsvg pango cfitsio poppler poppler-glib \

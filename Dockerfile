@@ -1,5 +1,5 @@
 # === STAGE 1: Build Javascript assets ===
-FROM node:20-bookworm AS builder_stage1
+FROM node:22.23.4-bookworm AS builder_stage1
 
 RUN npm install -g pnpm
 SHELL ["/bin/bash", "-c"]
@@ -9,17 +9,18 @@ WORKDIR /picsur
 
 # Install dependencies and build all packages
 RUN pnpm install --frozen-lockfile
+RUN node --expose-gc support/test-qoi.cjs
 RUN pnpm --filter picsur-shared build
 RUN pnpm --filter picsur-frontend build
 RUN pnpm --filter picsur-backend build
 
 # Prepare trimmed project structure
 RUN mkdir -p /trimmed
-RUN cp -r --parents ./{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,branding} /trimmed
+RUN cp -r --parents ./{package.json,pnpm-lock.yaml,pnpm-workspace.yaml,branding,patches} /trimmed
 RUN cp -r --parents ./{frontend,backend,shared}/{dist,package.json} /trimmed
 
 # === STAGE 2: Final runtime image ===
-FROM node:20-bookworm-slim
+FROM node:22.23.4-bookworm-slim
 
 # Install libvips and production dependencies
 # Debian's libvips is well-optimized with glibc

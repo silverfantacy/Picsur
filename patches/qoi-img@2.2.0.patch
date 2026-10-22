@@ -1,0 +1,11 @@
+--- a/lib/qoi.cpp
++++ b/lib/qoi.cpp
+@@ -17,7 +17,7 @@
+ 
+ namespace qoi_node
+ {
+-  static void finalize_data(const napi_env__* env, void *data, void *hint)
++  static void finalize_data(node_api_basic_env env, void *data, void *hint)
+   {
+     free(data);
+   }
