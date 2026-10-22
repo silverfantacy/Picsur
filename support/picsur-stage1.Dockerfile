@@ -10,7 +10,7 @@ ADD . /picsur
 WORKDIR /picsur
 
 RUN pnpm install --frozen-lockfile
-RUN node --expose-gc support/test-qoi.cjs
+RUN node --expose-gc backend/scripts/test-qoi.cjs
 
 RUN pnpm --filter picsur-shared build
 RUN pnpm --filter picsur-frontend build

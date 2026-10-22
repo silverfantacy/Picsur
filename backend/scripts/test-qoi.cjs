@@ -4,7 +4,7 @@ const { createRequire } = require('node:module');
 const { resolve } = require('node:path');
 const { Readable, Writable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
-const qoi = createRequire(resolve(__dirname, '../backend/package.json'))('qoi-img');
+const qoi = createRequire(resolve(__dirname, '../package.json'))('qoi-img');
 
 async function transform(input, codec) {
   const chunks = [];
