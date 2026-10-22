@@ -10,13 +10,13 @@
       ],
       "restart": "unless-stopped",
       "build": {
-        "context": "..",
+        "context": ".",
         "dockerfile": ".openship/picsur-official.Dockerfile"
       }
     },
     "picsur-rering": {
       "build": {
-        "context": "..",
+        "context": ".",
         "dockerfile": ".openship/Dockerfile"
       },
       "ports": [
